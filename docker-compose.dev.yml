@@ -1,0 +1,14 @@
+# Запуск: docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build
+# Или:    make dev
+services:
+  app:
+    build:
+      context: .
+      target: development
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      NODE_ENV: development
