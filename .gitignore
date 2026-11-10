@@ -10,11 +10,12 @@ dist/
 # TypeScript build info
 *.tsbuildinfo
 
-# Playwright
+# Playwright — artifacts (not snapshots)
 test-results/
 playwright-report/
 playwright/.cache/
-tests/visual/*.png
+# Baseline snapshots are committed intentionally (make pw-update to regenerate)
+# tests/visual/__snapshots__/ is tracked
 
 # Vitest
 coverage/

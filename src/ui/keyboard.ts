@@ -19,7 +19,8 @@ export type HandSide = 'right' | 'left'
 export interface KeyHighlight {
   midi: number
   hand: HandSide
-  label?: string  // e.g. '↑2', '↓1'
+  label?: string    // e.g. '↑2', '↓1'
+  matched?: boolean // mic confirmed this note → green
 }
 
 export function renderKeyboard(
@@ -45,7 +46,9 @@ export function renderKeyboard(
       if (!IS_BLACK[pc]) {
         const wi = WHITE_IDX[pc]!
         const x = (oi * 7 + wi) * WW
-        const fill = hl ? `var(--accent-${hl.hand})` : 'var(--key-white)'
+        const fill = hl
+          ? hl.matched ? 'var(--accent-matched)' : `var(--accent-${hl.hand})`
+          : 'var(--key-white)'
         const txtFill = hl ? '#fff' : 'var(--key-label)'
 
         whites.push(
@@ -66,7 +69,9 @@ export function renderKeyboard(
       } else {
         const frac = BLACK_FRAC[pc]!
         const x = (oi * 7 + frac) * WW - BW / 2
-        const fill = hl ? `var(--accent-${hl.hand})` : 'var(--key-black)'
+        const fill = hl
+          ? hl.matched ? 'var(--accent-matched)' : `var(--accent-${hl.hand})`
+          : 'var(--key-black)'
 
         blacks.push(
           `<rect x="${x.toFixed(1)}" y="0" width="${BW}" height="${BH}" fill="${fill}" rx="2"/>`,

@@ -1,64 +1,67 @@
 /* ── colour tokens ── */
 :root {
-  --bg:           #f8fafc;
-  --surface:      #ffffff;
-  --border:       #e2e8f0;
-  --text:         #1e293b;
-  --text-dim:     #64748b;
-  --accent-right: #6366f1;
-  --accent-left:  #f59e0b;
-  --key-white:    #ffffff;
-  --key-black:    #1e293b;
-  --key-border:   #cbd5e1;
-  --key-label:    #94a3b8;
-  --ci-bg:        #e2e8f0;
-  --ci-text:      #64748b;
-  --ci-active-bg: #6366f1;
-  --ci-next-ring: #6366f1;
-  --btn-bg:       #f1f5f9;
-  --btn-text:     #1e293b;
+  --bg:             #f8fafc;
+  --surface:        #ffffff;
+  --border:         #e2e8f0;
+  --text:           #1e293b;
+  --text-dim:       #64748b;
+  --accent-right:   #6366f1;
+  --accent-left:    #f59e0b;
+  --accent-matched: #22c55e;
+  --key-white:      #ffffff;
+  --key-black:      #1e293b;
+  --key-border:     #cbd5e1;
+  --key-label:      #94a3b8;
+  --ci-bg:          #e2e8f0;
+  --ci-text:        #64748b;
+  --ci-active-bg:   #6366f1;
+  --ci-next-ring:   #6366f1;
+  --btn-bg:         #f1f5f9;
+  --btn-text:       #1e293b;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg:           #0f172a;
-    --surface:      #1e293b;
-    --border:       #334155;
-    --text:         #f1f5f9;
-    --text-dim:     #94a3b8;
-    --accent-right: #818cf8;
-    --accent-left:  #fbbf24;
-    --key-white:    #334155;
-    --key-black:    #0f172a;
-    --key-border:   #475569;
-    --key-label:    #4b5563;
-    --ci-bg:        #1e293b;
-    --ci-text:      #64748b;
-    --ci-active-bg: #6366f1;
-    --ci-next-ring: #818cf8;
-    --btn-bg:       #1e293b;
-    --btn-text:     #f1f5f9;
+    --bg:             #0f172a;
+    --surface:        #1e293b;
+    --border:         #334155;
+    --text:           #f1f5f9;
+    --text-dim:       #94a3b8;
+    --accent-right:   #818cf8;
+    --accent-left:    #fbbf24;
+    --accent-matched: #4ade80;
+    --key-white:      #334155;
+    --key-black:      #0f172a;
+    --key-border:     #475569;
+    --key-label:      #4b5563;
+    --ci-bg:          #1e293b;
+    --ci-text:        #64748b;
+    --ci-active-bg:   #6366f1;
+    --ci-next-ring:   #818cf8;
+    --btn-bg:         #1e293b;
+    --btn-text:       #f1f5f9;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg:           #0f172a;
-  --surface:      #1e293b;
-  --border:       #334155;
-  --text:         #f1f5f9;
-  --text-dim:     #94a3b8;
-  --accent-right: #818cf8;
-  --accent-left:  #fbbf24;
-  --key-white:    #334155;
-  --key-black:    #0f172a;
-  --key-border:   #475569;
-  --key-label:    #4b5563;
-  --ci-bg:        #1e293b;
-  --ci-text:      #64748b;
-  --ci-active-bg: #6366f1;
-  --ci-next-ring: #818cf8;
-  --btn-bg:       #1e293b;
-  --btn-text:     #f1f5f9;
+  --bg:             #0f172a;
+  --surface:        #1e293b;
+  --border:         #334155;
+  --text:           #f1f5f9;
+  --text-dim:       #94a3b8;
+  --accent-right:   #818cf8;
+  --accent-left:    #fbbf24;
+  --accent-matched: #4ade80;
+  --key-white:      #334155;
+  --key-black:      #0f172a;
+  --key-border:     #475569;
+  --key-label:      #4b5563;
+  --ci-bg:          #1e293b;
+  --ci-text:        #64748b;
+  --ci-active-bg:   #6366f1;
+  --ci-next-ring:   #818cf8;
+  --btn-bg:         #1e293b;
+  --btn-text:       #f1f5f9;
 }
 
 /* ── reset ── */
@@ -255,7 +258,14 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 /* ── controls ── */
-.controls { display: flex; justify-content: center; padding-bottom: 0.5rem; }
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 
 /* ── buttons ── */
 .btn {
@@ -379,8 +389,89 @@ button { cursor: pointer; font-family: inherit; }
   accent-color: var(--accent-right);
 }
 
-/* ── tablet landscape: keep keyboard visible without scrolling ── */
-@media (min-width: 768px) and (orientation: landscape) {
-  .app-main { gap: 0.5rem; padding: 0.5rem 1rem; }
-  .chord-cur { font-size: clamp(3rem, 12vw, 7rem); }
+/* ── head actions (theme + fullscreen) ── */
+.head-actions { display: flex; align-items: center; }
+
+/* ── mic button ── */
+.btn-mic {
+  font-size: 1.2rem;
+  padding: 0.3rem 0.5rem;
+  border: none;
+  background: transparent;
+  color: var(--text-dim);
+}
+
+.btn-mic.active {
+  color: #ef4444;
+  animation: pulse-mic 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse-mic {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ── matched note legend ── */
+.mic-legend {
+  font-size: 0.75rem;
+  color: var(--accent-matched);
+  text-align: center;
+  min-height: 1.1em;
+}
+
+/* ── mobile: hide keyboard by default, show toggle ── */
+@media (max-width: 599px) {
+  .kbd-wrap { display: none; }
+  .kbd-wrap.visible { display: block; }
+  .chord-cur { font-size: clamp(3rem, 20vw, 6rem); }
+}
+
+@media (min-width: 600px) {
+  #btn-kbd-toggle { display: none; }
+}
+
+/* ── tablet portrait ── */
+@media (min-width: 600px) and (orientation: portrait) {
+  .app-main { gap: 0.6rem; padding: 0.75rem 1.25rem; }
+}
+
+/* ── tablet landscape (primary use case) ── */
+@media (min-width: 700px) and (orientation: landscape) {
+  #app {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  .app-main {
+    display: grid;
+    grid-template-columns: minmax(260px, 2fr) 3fr;
+    grid-template-rows: auto 1fr auto auto auto;
+    grid-template-areas:
+      "chord  kbd"
+      "chain  kbd"
+      "metro  kbd"
+      "ctrls  kbd"
+      "legend kbd";
+    height: calc(100dvh - 3rem);
+    overflow: hidden;
+    gap: 0.35rem 1.25rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .chord-display { grid-area: chord; }
+  .kbd-wrap      { grid-area: kbd; align-self: center; }
+  .chain         { grid-area: chain; align-self: start; min-height: 0; overflow: hidden; }
+  .metro-row     { grid-area: metro; }
+  .controls      { grid-area: ctrls; padding-bottom: 0; }
+  .mic-legend    { grid-area: legend; }
+
+  .chord-cur { font-size: clamp(3.5rem, 10vw, 8rem); }
+}
+
+/* ── desktop ── */
+@media (min-width: 1100px) {
+  .app-main  { max-width: 1100px; margin-left: auto; margin-right: auto; }
+  .app-head  { padding: 0 calc(50vw - 550px + 1rem); }
+  .app-main  { padding: 0.75rem 1.5rem 1rem; }
+  .chord-cur { font-size: clamp(4rem, 8vw, 9rem); }
 }

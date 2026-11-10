@@ -10,5 +10,9 @@ services:
     volumes:
       - .:/app
       - /app/node_modules
+      - pw-cache:/root/.cache/ms-playwright   # persist browser binaries across container runs
     environment:
       NODE_ENV: development
+
+volumes:
+  pw-cache:
