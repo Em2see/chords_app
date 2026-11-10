@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Build Vite and deploy Pages
 
 on:
   push:
@@ -34,6 +34,12 @@ jobs:
         run: npm test
       - name: Build for Pages
         run: npm run build:pages
+      - name: Check Pages output
+        run: |
+          test -f dist/index.html
+          grep -q 'src="/chords_app/assets/' dist/index.html
+          grep -q 'href="/chords_app/assets/' dist/index.html
+          ! grep -q '/src/main.ts' dist/index.html
       - name: Configure Pages
         uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6
       - name: Upload Pages artifact
