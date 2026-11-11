@@ -2,6 +2,7 @@
 # Или:    make dev
 services:
   app:
+    image: chords_app-dev
     build:
       context: .
       target: development

@@ -16,6 +16,7 @@ import { playChord } from './audio/synth'
 import { Metronome } from './audio/metronome'
 import { unlockAudio } from './audio/context'
 import { startMic } from './audio/mic'
+import { initPractice } from './ui/practice'
 
 const THEME_KEY = 'chord-trainer-theme'
 
@@ -504,7 +505,12 @@ function buildAppHTML(): string {
     <button class="btn icon-btn" id="btn-fs" aria-label="Полный экран">⛶</button>
   </div>
 </header>
-<main class="app-main">
+<nav class="app-tabs" role="tablist" aria-label="Разделы">
+  <button class="app-tab active" id="tab-chords" role="tab" data-tab="chords" aria-controls="panel-chords" aria-selected="true">Аккорды</button>
+  <button class="app-tab" id="tab-plan" role="tab" data-tab="plan" aria-controls="practice-plan" aria-selected="false">План</button>
+  <button class="app-tab" id="tab-session" role="tab" data-tab="session" aria-controls="practice-session" aria-selected="false">Занятие</button>
+</nav>
+<main id="panel-chords" class="app-main" role="tabpanel" aria-labelledby="tab-chords" data-tab-panel="chords">
   <div class="chord-display">
     <div id="chord-current" class="chord-cur">…</div>
     <div id="chord-inv"     class="chord-inv"></div>
@@ -534,6 +540,8 @@ function buildAppHTML(): string {
   </div>
   <div id="mic-legend" class="mic-legend"></div>
 </main>
+<section id="practice-plan" class="practice-page" role="tabpanel" aria-labelledby="tab-plan" data-tab-panel="plan" hidden></section>
+<section id="practice-session" class="practice-page" role="tabpanel" aria-labelledby="tab-session" data-tab-panel="session" hidden></section>
 <div id="set-panel" class="set-panel" hidden>
   <div class="set-inner">
     <div class="set-head">
@@ -557,6 +565,7 @@ function q<T extends Element = Element>(sel: string): T | null {
 
 // ── boot ───────────────────────────────────────────────────────────────────
 document.getElementById('app')!.innerHTML = buildAppHTML()
+initPractice()
 applyTheme(loadTheme())
 unlockAudio()
 void requestWakeLock()
@@ -599,6 +608,7 @@ q('#set-panel')!.addEventListener('click', (e) => {
 
 document.addEventListener('keydown', (e) => {
   if (!q('#set-panel')!.hasAttribute('hidden')) return
+  if (q<HTMLElement>('.app-main')!.hidden) return
   if (e.code === 'Space' || e.code === 'ArrowRight' || e.code === 'PageDown') {
     e.preventDefault(); advance()
   }

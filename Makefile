@@ -20,7 +20,7 @@ test:
 	$(COMPOSE_DEV) run --rm $(APP) npm test
 
 pw-install: ## Install Playwright browsers inside dev container (run once)
-	$(COMPOSE_DEV) run --rm $(APP) npx playwright install --with-deps chromium webkit
+	$(COMPOSE_DEV) run --rm $(APP) npx playwright install chromium webkit
 
 test-e2e: ## Run Playwright e2e tests (requires: make pw-install)
 	$(COMPOSE_DEV) run --rm $(APP) npm run test:e2e
